@@ -1,0 +1,51 @@
+# Binaries for programs and plugins
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Output of the go coverage tool
+coverage.out
+
+# Configuration files
+.env
+.env.local
+
+# Logs
+*.log
+
+# IDE directories
+.idea/
+.vscode/
+*.swp
+
+# Dependency directories (exclude vendor/ if you're using Go modules)
+vendor/
+
+# Go build files
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+# Compiled object files
+*.o
+*.a
+
+# GoLand project files
+*.iml
+
+# Editor swap files
+*~
+
+# Generated files
+gen/
+
+# Go workspace file
+go.work
+
+# Module files
+go.sum
