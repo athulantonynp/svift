@@ -7,4 +7,4 @@ import com.squareup.moshi.JsonClass
 data class YoutubeMusicItem(var videoId:String="",var time:Long=0L)
 
 @JsonClass(generateAdapter = true)
-data class YoutubeMusicCloudResponse(var ym:List<YoutubeMusicItem> = emptyList())
+data class YoutubeMusicCloudResponse(var ym:List<YoutubeMusicItem> = emptyList(),var userName:String="")

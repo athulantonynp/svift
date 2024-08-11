@@ -13,7 +13,7 @@ import (
 var client youtube.Client = youtube.Client{}
 
 
-func DownloadAudios(videoIDsStr string,downloadPath string) string {
+func DownloadAudios(videoIDsStr string,downloadPath string,callback DownloadCallback) string {
 	videoIDs := strings.Split(videoIDsStr, ",")
     var wg sync.WaitGroup
     maxGoroutines := 10
@@ -35,6 +35,7 @@ func DownloadAudios(videoIDsStr string,downloadPath string) string {
             } else {
                 mu.Lock()
                 songs = append(songs, *response.Song)
+				callback.OnMessage(fmt.Sprintf("Downloaded %d of %d", len(songs), len(videoIDs)))
                 mu.Unlock()
             }
         }(videoID)
