@@ -24,6 +24,12 @@ class MainViewModel(val app:Application) : AndroidViewModel(app) {
             }
         }
     }
+
+    fun sync(){
+        viewModelScope.launch {
+            Injection.songsRepository.fetchLatestSongs()
+        }
+    }
     companion object {
         val Factory: ViewModelProvider.Factory = object : ViewModelProvider.Factory {
             @Suppress("UNCHECKED_CAST")
