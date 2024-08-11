@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -57,6 +58,8 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version")
     kapt("androidx.lifecycle:lifecycle-compiler:$lifecycle_version")
 
+    // Firebase
+    implementation(platform("com.google.firebase:firebase-bom:33.1.2"))
 
     //coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
