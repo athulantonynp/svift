@@ -9,13 +9,19 @@ import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.AP
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
 import athul.svift.android.injection.AuthRepository
+import athul.svift.android.injection.Injection
+import athul.svift.android.injection.showToast
 import kotlinx.coroutines.launch
 
 class MainViewModel(val app:Application) : AndroidViewModel(app) {
 
+    val authFlow = Injection.authRepository.getCurrentUserFlow()
     fun performLogin(userName:String,password:String){
         viewModelScope.launch {
             val response = AuthRepository().login(userName,password)
+            if(response == null){
+                app.showToast("Invalid authentication credentials. Please try again.")
+            }
         }
     }
     companion object {
