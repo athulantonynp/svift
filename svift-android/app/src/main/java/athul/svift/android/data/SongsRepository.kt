@@ -1,4 +1,10 @@
 package athul.svift.android.data
 
-class SongsRepository {
+import android.app.Application
+
+class SongsRepository(private val application: Application) {
+
+    fun fetchLatestSongs(){
+        
+    }
 }

@@ -1,0 +1,14 @@
+{
+  "name": "extract_videoids_from_ytm_json",
+  "version": "1.0.0",
+  "description": "",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "firebase-admin": "^12.3.1"
+  }
+}

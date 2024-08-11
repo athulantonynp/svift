@@ -18,7 +18,7 @@ object Injection {
     lateinit var authRepository: AuthRepository
 
     fun init(app:Application){
-        songsRepository = SongsRepository()
+        songsRepository = SongsRepository(app)
         authRepository = AuthRepository(app)
     }
 
