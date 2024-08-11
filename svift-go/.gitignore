@@ -3,6 +3,9 @@
 *.dll
 *.so
 *.dylib
+*.aar
+*.jar
+*.xcframework
 
 # Output of the go coverage tool
 coverage.out
