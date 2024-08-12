@@ -23,8 +23,9 @@ import java.io.File
 
 class SongsRepository(private val application: Application,private val songsDao: SongDao) {
     private val db = FirebaseFirestore.getInstance()
-    val downloadFlow = MutableStateFlow("")
     suspend fun fetchLatestSongs(callback: FetchCallback){
+        Log.e("FETCH","START")
+        callback.onFetchStarted()
         val lastSongTimeStamp = fetchLastSongTimeStampInDb()
         val userName = Injection.authRepository.getCurrentUserFlow().first()?.userName
         if (!userName.isNullOrEmpty()){
@@ -47,6 +48,8 @@ class SongsRepository(private val application: Application,private val songsDao:
                 sendForDownload(songs,callback.downloadCallback)
             }
         }
+        Log.e("FETCH","END")
+        callback.onFetchEnd()
     }
 
     suspend fun sendForDownload(list: List<YoutubeMusicItem>?,callback: DownloadCallback){
