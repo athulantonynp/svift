@@ -24,7 +24,6 @@ import java.io.File
 class SongsRepository(private val application: Application,private val songsDao: SongDao) {
     private val db = FirebaseFirestore.getInstance()
     suspend fun fetchLatestSongs(callback: FetchCallback){
-        Log.e("FETCH","START")
         callback.onFetchStarted()
         val lastSongTimeStamp = fetchLastSongTimeStampInDb()
         val userName = Injection.authRepository.getCurrentUserFlow().first()?.userName
@@ -48,7 +47,6 @@ class SongsRepository(private val application: Application,private val songsDao:
                 sendForDownload(songs,callback.downloadCallback)
             }
         }
-        Log.e("FETCH","END")
         callback.onFetchEnd()
     }
 

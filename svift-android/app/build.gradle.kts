@@ -80,4 +80,5 @@ dependencies {
     kapt("com.squareup.moshi:moshi-kotlin-codegen:1.15.1")
     implementation("com.github.bumptech.glide:glide:4.15.1")
     annotationProcessor("com.github.bumptech.glide:compiler:4.15.1")
+    implementation("com.google.android.exoplayer:exoplayer:2.18.5")
 }

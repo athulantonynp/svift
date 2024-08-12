@@ -2,4 +2,11 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="colorPrimaryLight">#6200EE</color> <!-- A deep purple for the primary color -->
+    <color name="colorPrimaryDarkLight">#3700B3</color> <!-- A darker shade of the primary color -->
+    <color name="colorAccentLight">#03DAC5</color> <!-- A teal accent color -->
+
+    <color name="colorPrimaryNight">#BB86FC</color> <!-- A lighter purple suitable for dark backgrounds -->
+    <color name="colorPrimaryDarkNight">#3700B3</color> <!-- Darker purple, stays the same for consistency -->
+    <color name="colorAccentNight">#03DAC5</color> <!-- A teal accent color that works well in dark mode -->
 </resources>

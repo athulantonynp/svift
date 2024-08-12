@@ -72,11 +72,11 @@ class MainViewModel(val app:Application) : AndroidViewModel(app),FetchCallback {
             }
         }
 
-        if(currentPlaybackState?.status == PlaybackStatus.PLAYING){
-            viewModelScope.launch { currentSongFlow?.emit(currentPlaybackState.copy(status = PlaybackStatus.PAUSED)) }
+        if(currentPlaybackState?.status == PlaybackStatus.PLAYING || currentPlaybackState?.status == PlaybackStatus.RESUMED){
+            viewModelScope.launch { currentSongFlow.emit(currentPlaybackState.copy(status = PlaybackStatus.PAUSED)) }
         }
         if(currentPlaybackState?.status == PlaybackStatus.PAUSED){
-            viewModelScope.launch{currentSongFlow?.emit(currentPlaybackState.copy(status = PlaybackStatus.PLAYING))}
+            viewModelScope.launch{currentSongFlow.emit(currentPlaybackState.copy(status = PlaybackStatus.RESUMED))}
         }
     }
 

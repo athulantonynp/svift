@@ -8,5 +8,6 @@ data class PlaybackState(
 enum class PlaybackStatus{
     NONE,
     PLAYING,
-    PAUSED
+    PAUSED,
+    RESUMED,
 }
