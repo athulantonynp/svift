@@ -22,6 +22,7 @@ func DownloadAudios(videoIDsStr string,downloadPath string,callback DownloadCall
     var mu sync.Mutex
 
     for _, videoID := range videoIDs {
+		fmt.Println("Downloading video", videoID)
         wg.Add(1)
         guard <- struct{}{} // Block if there are already maxGoroutines running
 
@@ -31,7 +32,8 @@ func DownloadAudios(videoIDsStr string,downloadPath string,callback DownloadCall
 
             response := downloadMp3(videoID, downloadPath)
             if response.Error != nil {
-                fmt.Printf("Error downloading video %s: %s\n", videoID, response.Error)
+				jsonData,_:= json.Marshal(response.Error)
+                fmt.Printf("Error downloading video %s: %s\n", videoID, jsonData)
             } else {
                 mu.Lock()
                 songs = append(songs, *response.Song)

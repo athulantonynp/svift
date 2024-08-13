@@ -1,11 +1,8 @@
 package athul.svift.android
 
 import android.app.Activity
-import android.app.ActivityManager
 import android.app.Application
-import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import athul.svift.android.injection.Injection
 
 class SviftApp : Application(),Application.ActivityLifecycleCallbacks{

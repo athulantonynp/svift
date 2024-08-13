@@ -18,7 +18,8 @@ class AuthRepository(private val application: Application) {
     suspend fun login(userName:String, password:String):AuthResponse?{
         val query = db.collection("users").whereEqualTo("userName",userName.trim()).get().await()
         val pass = query.documents.firstOrNull()?.get("password")?.toString()
-        if(pass.equals(password)){
+
+        if(pass.toString() == password){
             val response = AuthResponse(userName,password)
             val adapter = getAdapter<AuthResponse>()
             application.applicationContext.dataStore.edit {

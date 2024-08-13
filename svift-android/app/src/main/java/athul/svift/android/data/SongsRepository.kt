@@ -31,7 +31,6 @@ class SongsRepository(private val application: Application,private val songsDao:
             val ref = db.collection("songs").whereEqualTo("userName",userName)
             val docs = ref.get().await()
             val songs = docs.toObjects(YoutubeMusicCloudResponse::class.java).firstOrNull()?.ym
-
             if(lastSongTimeStamp!=null && lastSongTimeStamp>0){
                 val newSongs = songs?.filter {
                     it.time>lastSongTimeStamp
@@ -50,8 +49,9 @@ class SongsRepository(private val application: Application,private val songsDao:
         callback.onFetchEnd()
     }
 
-    suspend fun sendForDownload(list: List<YoutubeMusicItem>?,callback: DownloadCallback){
-        val response = Sviftytd.downloadAudios(list?.map { it.videoId }?.joinToString(","),getSongsPath(),callback)
+    private suspend fun sendForDownload(list: List<YoutubeMusicItem>?, callback: DownloadCallback){
+        val listComma = list?.map { it.videoId }?.joinToString(",")
+        val response = Sviftytd.downloadAudios(listComma,getSongsPath(),callback)
         val moshi = Moshi.Builder()
             .add(KotlinJsonAdapterFactory())
             .build()

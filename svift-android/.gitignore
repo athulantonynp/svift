@@ -16,3 +16,4 @@ local.properties
 
 # Ignore all google-services.json files in the project
 **/google-services.json
+/app/release

@@ -15,22 +15,38 @@ admin.initializeApp({
 
 const db = getFirestore();
 
-// Step 1: Load the JSON file into memory
-const rawData = fs.readFileSync("data.json");
+const fileNames = ["1.json", "2.json", "3.json", "4.json", "5.json"];
+const userName = "antony";
 
-// Step 2: Parse the JSON data
-const jsonData = JSON.parse(rawData);
+const out = [];
+for (const fileName of fileNames) {
+  // Step 1: Load the JSON file into memory
+  const rawData = fs.readFileSync(`./data/${fileName}`);
+  console.log(fileName);
 
-const array =
-  jsonData.contents.twoColumnBrowseResultsRenderer.secondaryContents
-    .sectionListRenderer.contents[0].musicPlaylistShelfRenderer.contents;
-// Step 3: Extract the values of the `videoId` field
-const videoIds = array.map((item) => {
-  return item.musicResponsiveListItemRenderer.playlistItemData.videoId;
-});
+  // Step 2: Parse the JSON data
+  const jsonData = JSON.parse(rawData);
 
+  if (jsonData.contents !== undefined) {
+    const array =
+      jsonData.contents.twoColumnBrowseResultsRenderer.secondaryContents
+        .sectionListRenderer.contents[0].musicPlaylistShelfRenderer.contents;
+    // Step 3: Extract the values of the `videoId` field
+    const videoIds = array.map((item) => {
+      return item.musicResponsiveListItemRenderer.playlistItemData.videoId;
+    });
+    out.push(...videoIds);
+  } else {
+    const array =
+      jsonData.continuationContents.musicPlaylistShelfContinuation.contents;
+    const videoIds = array.map((item) => {
+      return item.musicResponsiveListItemRenderer.playlistItemData.videoId;
+    });
+    out.push(...videoIds);
+  }
+}
 // Step 4: Remove duplicate `videoId` values
-const uniqueVideoIds = [...new Set(videoIds)];
+const uniqueVideoIds = [...new Set(out)];
 
 // Step 5: Reverse the unique `videoId` values
 uniqueVideoIds.reverse();
@@ -42,13 +58,14 @@ function sleep(ms) {
 async function setData() {
   const out = [];
   for (const id of uniqueVideoIds) {
-    await sleep(2000); // Adding a delay of 2 seconds
+    await sleep(2); // Adding a delay of 2 seconds
     out.push({
       videoId: id,
       time: Date.now(),
     });
   }
-  await db.collection("songs").doc("athulantony").set({
+  await db.collection("songs").doc(userName).set({
+    userName: userName,
     ym: out,
   });
 }
