@@ -16,6 +16,9 @@ import athul.svift.android.data.models.Song
 import athul.svift.android.injection.AuthRepository
 import athul.svift.android.injection.Injection
 import athul.svift.android.injection.showToast
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -113,6 +116,16 @@ class MainViewModel(val app:Application) : AndroidViewModel(app),FetchCallback {
 
         // Update the current song to the new song
         currentSongFlow.value = PlaybackState(status = PlaybackStatus.PLAYING,nextSongToPlay)
+    }
+
+    fun cacheAlbumArtWorks(){
+        viewModelScope.launch(Dispatchers.IO) {
+            val list = Injection.database.songDao().getAll()
+            list.forEach {
+                Glide.with(app).load(it.thumbnailURL).apply(RequestOptions().diskCacheStrategy(
+                    DiskCacheStrategy.ALL).skipMemoryCache(true)).preload()
+            }
+        }
     }
     companion object {
         val Factory: ViewModelProvider.Factory = object : ViewModelProvider.Factory {

@@ -9,4 +9,6 @@
     <color name="colorPrimaryNight">#BB86FC</color> <!-- A lighter purple suitable for dark backgrounds -->
     <color name="colorPrimaryDarkNight">#3700B3</color> <!-- Darker purple, stays the same for consistency -->
     <color name="colorAccentNight">#03DAC5</color> <!-- A teal accent color that works well in dark mode -->
+    <color name="materialBlack">#212121</color>
+    <color name="materialPurple">#c2a3ce</color>
 </resources>

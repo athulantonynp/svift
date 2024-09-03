@@ -3,10 +3,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:background="@color/materialBlack"
     android:layout_height="match_parent">
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
-    android:background="?attr/backgroundColor"
+    android:background="@color/materialBlack"
+    android:layout_gravity="center"
     android:layout_height="wrap_content"
     android:padding="16dp">
 
@@ -26,7 +28,7 @@
         app:layout_constraintEnd_toStartOf="@+id/iv_sync"
         app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/tv_fetch_status"
-        android:textColor="?attr/textFillColor"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="@+id/iv_sync"
         android:layout_marginEnd="8dp"/>
 
@@ -39,8 +41,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_height="wrap_content">
         <ImageView
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
             android:src="@drawable/sample_album_art"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -58,7 +60,7 @@
                 android:maxWidth="500dp"
                 android:maxLines="2"
                 android:ellipsize="end"
-                android:textColor="?attr/textFillColor"
+                android:textColor="@color/white"
                 android:layout_marginStart="16dp"
                 android:textSize="24sp"
                 android:id="@+id/tv_song_name"
@@ -70,7 +72,7 @@
                 android:maxWidth="500dp"
                 android:maxLines="2"
                 android:ellipsize="end"
-                android:textColor="?attr/textFillColor"
+                android:textColor="@color/white"
                 app:layout_constraintStart_toEndOf="@+id/iv_album"
                 android:layout_marginStart="16dp"
                 android:textSize="16sp"
@@ -80,13 +82,23 @@
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.appcompat.widget.AppCompatSeekBar
-        android:layout_width="wrap_content"
+<!--    <androidx.appcompat.widget.AppCompatSeekBar-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/cl_song_info"-->
+<!--        android:layout_marginTop="32dp"-->
+<!--        android:minWidth="340dp"-->
+<!--        android:id="@+id/sk_progress"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"/>-->
+
+    <com.google.android.material.slider.Slider
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@+id/cl_song_info"
         android:layout_marginTop="32dp"
-        android:minWidth="340dp"
         android:id="@+id/sk_progress"
+        app:layout_constraintWidth_percent="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
@@ -95,9 +107,11 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toEndOf="@+id/sk_progress"
         android:id="@+id/tv_timestamp"
-        android:textColor="?attr/textFillColor"
-        app:layout_constraintTop_toBottomOf="@+id/cl_song_info"
-        android:layout_marginTop="32dp"/>
+        android:textColor="@color/white"
+        android:text="00:00"
+        app:layout_constraintTop_toTopOf="@+id/sk_progress"
+        app:layout_constraintBottom_toBottomOf="@+id/sk_progress"
+        />
 
 
     <LinearLayout
@@ -107,25 +121,36 @@
         app:layout_constraintTop_toBottomOf="@+id/sk_progress"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         android:gravity="center"
         android:layout_marginTop="32dp">
 
-        <ImageView
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="Previous"
+            app:fabSize="mini"
+            style="@style/RoundFabStyle"
+            app:backgroundTint="@color/materialPurple"
             android:id="@+id/iv_previous"
-            android:src="@drawable/ic_previous"/>
-        <ImageView
-            android:layout_width="72dp"
-            android:layout_height="72dp"
+            app:srcCompat="@drawable/previous"/>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:id="@+id/iv_play"
+            app:fabSize="normal"
+            app:fabCustomSize="80dp"
+            style="@style/RoundFabStyle"
             android:layout_marginHorizontal="48dp"
-            android:src="@drawable/ic_play"/>
-        <ImageView
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            app:backgroundTint="@color/materialPurple"
+            android:src="@drawable/play"/>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:id="@+id/iv_next"
-            android:src="@drawable/ic_next"/>
+            style="@style/RoundFabStyle"
+            app:backgroundTint="@color/materialPurple"
+            app:srcCompat="@drawable/next"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

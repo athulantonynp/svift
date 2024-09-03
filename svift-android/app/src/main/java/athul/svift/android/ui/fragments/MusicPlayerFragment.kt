@@ -27,10 +27,13 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.Player
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.shape.ShapeAppearanceModel
+import com.google.android.material.slider.Slider
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-class MusicPlayerFragment : Fragment(), SeekBar.OnSeekBarChangeListener {
+class MusicPlayerFragment : Fragment(), SeekBar.OnSeekBarChangeListener, Slider.OnChangeListener {
 
     private val viewModel by activityViewModels<MainViewModel>()
     private val handler = Handler(Looper.getMainLooper())
@@ -89,17 +92,23 @@ class MusicPlayerFragment : Fragment(), SeekBar.OnSeekBarChangeListener {
         return String.format("%02d:%02d", minutes, remainingSeconds)
     }
 
+    private fun setPlayerPlaying(isPlaying:Boolean){
+        val play = view?.findViewById<FloatingActionButton>(R.id.iv_play)
+        play?.setImageDrawable(ContextCompat.getDrawable(requireContext(),if(isPlaying)
+            R.drawable.pause else R.drawable.play))
+    }
+
     private fun startPlayer(){
         viewModel.startMusicObserver()
-        val previous = view?.findViewById<ImageView>(R.id.iv_previous)
+        val previous = view?.findViewById<FloatingActionButton>(R.id.iv_previous)
         val albumArt = view?.findViewById<ImageView>(R.id.iv_album)
         val songName = view?.findViewById<TextView>(R.id.tv_song_name)
         val author = view?.findViewById<TextView>(R.id.tv_author)
-        val play = view?.findViewById<ImageView>(R.id.iv_play)
-        val next = view?.findViewById<ImageView>(R.id.iv_next)
-        val seekbar = view?.findViewById<AppCompatSeekBar>(R.id.sk_progress)
+        val play = view?.findViewById<FloatingActionButton>(R.id.iv_play)
+        val next = view?.findViewById<FloatingActionButton>(R.id.iv_next)
+        val seekbar = view?.findViewById<Slider>(R.id.sk_progress)
         val timeStamp = view?.findViewById<TextView>(R.id.tv_timestamp)
-        seekbar?.setOnSeekBarChangeListener(this)
+        seekbar?.addOnChangeListener(this)
 
         play?.setOnClickListener {
             viewModel.onPlayClicked()
@@ -133,8 +142,14 @@ class MusicPlayerFragment : Fragment(), SeekBar.OnSeekBarChangeListener {
                     val currentPositionSeconds = (player.currentPosition / 1000).toInt()
 
                     // Update SeekBar
-                    seekbar?.max = durationSeconds
-                    seekbar?.progress = currentPositionSeconds
+                    seekbar?.valueFrom = 0.0f
+                    if (durationSeconds<=0){
+                        seekbar?.valueTo = 1f
+                    }else{
+                        seekbar?.valueTo = durationSeconds.toFloat()
+                    }
+
+                    seekbar?.value = currentPositionSeconds.toFloat()
 
                     // Format the elapsed time and total time
                     val elapsedTime = formatTime(currentPositionSeconds)
@@ -143,6 +158,8 @@ class MusicPlayerFragment : Fragment(), SeekBar.OnSeekBarChangeListener {
                     // Update the TextView with the formatted timestamp
                     val formattedTime = "$elapsedTime : $totalTime"
                     timeStamp?.text = formattedTime
+
+                    setPlayerPlaying(player.isPlaying)
 
                     // Re-run this Runnable every second
                     handler.postDelayed(this, 1000)
@@ -159,8 +176,7 @@ class MusicPlayerFragment : Fragment(), SeekBar.OnSeekBarChangeListener {
                     }
                     songName?.text = it.song.title
                     author?.text = it.song.author
-                    play?.setImageDrawable(ContextCompat.getDrawable(requireContext(),if(it.status === PlaybackStatus.PLAYING)
-                        R.drawable.ic_pause else R.drawable.ic_play))
+                    setPlayerPlaying(it.status === PlaybackStatus.PLAYING)
 
 
                     if(isFromBackground() && getExoplayer()?.isPlaying == true){
@@ -179,7 +195,7 @@ class MusicPlayerFragment : Fragment(), SeekBar.OnSeekBarChangeListener {
                             getExoplayer()?.pause()
                         }
                         else -> {
-                            play?.setImageDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.ic_play))
+                            play?.setImageDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.play))
                         }
                     }
                 }else{
@@ -188,8 +204,8 @@ class MusicPlayerFragment : Fragment(), SeekBar.OnSeekBarChangeListener {
                     }
                     songName?.text = ""
                     author?.text = ""
-                    seekbar?.progress = 0
-                    play?.setImageDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.ic_play))
+                    seekbar?.value = 0.0f
+                    play?.setImageDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.play))
                 }
 
             }
@@ -215,6 +231,14 @@ class MusicPlayerFragment : Fragment(), SeekBar.OnSeekBarChangeListener {
     override fun onDestroy() {
         super.onDestroy()
         handler.removeCallbacksAndMessages(null)
+    }
+
+    override fun onValueChange(slider: Slider, value: Float, fromUser: Boolean) {
+        if (fromUser) {
+            // If the user changes the position, seek to that position
+            val seekPosition = value * 1000L // Convert progress (seconds) to milliseconds
+            getExoplayer()?.seekTo(seekPosition.toLong())
+        }
     }
 
 }
