@@ -13,13 +13,23 @@
     android:padding="16dp">
 
     <ImageButton
+        android:id="@+id/iv_update"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:padding="8dp"
+        android:src="@drawable/baseline_ad_units_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <ImageButton
         android:id="@+id/iv_sync"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:padding="8dp"
         android:src="@drawable/baseline_sync_24"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/iv_update"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -131,7 +141,7 @@
             android:contentDescription="Previous"
             app:fabSize="mini"
             style="@style/RoundFabStyle"
-            app:backgroundTint="@color/materialPurple"
+            app:backgroundTint="@color/black"
             android:id="@+id/iv_previous"
             app:srcCompat="@drawable/previous"/>
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -142,14 +152,14 @@
             app:fabCustomSize="80dp"
             style="@style/RoundFabStyle"
             android:layout_marginHorizontal="48dp"
-            app:backgroundTint="@color/materialPurple"
+            app:backgroundTint="@color/black"
             android:src="@drawable/play"/>
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/iv_next"
             style="@style/RoundFabStyle"
-            app:backgroundTint="@color/materialPurple"
+            app:backgroundTint="@color/black"
             app:srcCompat="@drawable/next"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

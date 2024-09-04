@@ -1,5 +1,6 @@
 package athul.svift.android.ui.fragments
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
@@ -20,6 +21,7 @@ import androidx.lifecycle.lifecycleScope
 import athul.svift.android.MainActivity
 import athul.svift.android.R
 import athul.svift.android.SviftApp
+import athul.svift.android.activities.AppUpdate
 import athul.svift.android.data.models.PlaybackStatus
 import athul.svift.android.data.models.Song
 import athul.svift.android.viewmodels.MainViewModel
@@ -62,12 +64,21 @@ class MusicPlayerFragment : Fragment(), SeekBar.OnSeekBarChangeListener, Slider.
             viewModel.sync()
         }
         val statusView = view?.findViewById<TextView>(R.id.tv_fetch_status)
+
+        view?.findViewById<ImageButton>(R.id.iv_update)?.setOnClickListener {
+            launchUpdater()
+        }
         lifecycleScope.launch {
             viewModel.fetchStatus.collectLatest {
                 statusView?.isVisible = !it.isNullOrEmpty()
                 statusView?.text = it
             }
         }
+    }
+
+    private fun launchUpdater(){
+        val intent = Intent(activity,AppUpdate::class.java)
+        activity?.startActivity(intent)
     }
 
     private fun playSong(song: Song){
