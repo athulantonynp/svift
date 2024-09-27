@@ -13,8 +13,8 @@ android {
         applicationId = "athul.svift.android"
         minSdk = 26
         targetSdk = 34
-        versionCode = 5
-        versionName = "1.5"
+        versionCode = 9
+        versionName = "1.9"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -63,7 +63,7 @@ dependencies {
 
 
     // Firebase
-    implementation(platform("com.google.firebase:firebase-bom:33.1.2"))
+    implementation(platform("com.google.firebase:firebase-bom:33.3.0"))
     implementation("com.google.firebase:firebase-firestore")
 
     // Room

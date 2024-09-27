@@ -5,6 +5,7 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Entity
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.PrimaryKey
 import androidx.room.Query
 import com.squareup.moshi.JsonClass
@@ -35,7 +36,7 @@ interface SongDao{
     @Query("SELECT * FROM songs WHERE id IN (:ids)")
     fun loadAllByIds(ids: IntArray): List<Song>
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(songs: List<Song>)
 
     @Delete

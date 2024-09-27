@@ -9,6 +9,8 @@ interface FetchCallback {
     fun onFetchStarted()
 
     fun onFetchEnd()
+
+    fun onFetchProgress(name:String)
 }
 
 enum class FetchType{

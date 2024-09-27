@@ -16,13 +16,12 @@ var client youtube.Client = youtube.Client{}
 func DownloadAudios(videoIDsStr string,downloadPath string,callback DownloadCallback) string {
 	videoIDs := strings.Split(videoIDsStr, ",")
     var wg sync.WaitGroup
-    maxGoroutines := 10
+    maxGoroutines := 20
     guard := make(chan struct{}, maxGoroutines)
     songs := make([]Song, 0)
     var mu sync.Mutex
 
     for _, videoID := range videoIDs {
-		fmt.Println("Downloading video", videoID)
         wg.Add(1)
         guard <- struct{}{} // Block if there are already maxGoroutines running
 

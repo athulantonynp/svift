@@ -36,6 +36,7 @@ class SongsRepository(private val application: Application,private val songsDao:
                     it.time>lastSongTimeStamp
                 }
                 if(newSongs?.size!! >0){
+                    callback.onFetchProgress("New ${newSongs.size} songs.Downloading")
                     callback.onFetchTypeDecided(FetchType.PARTIAL)
                     sendForDownload(newSongs,callback.downloadCallback)
                 }else{

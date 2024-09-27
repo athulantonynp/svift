@@ -161,4 +161,8 @@ class MainViewModel(val app:Application) : AndroidViewModel(app),FetchCallback {
     override fun onFetchEnd() {
         viewModelScope.launch { fetchStatus.emit(null) }
     }
+
+    override fun onFetchProgress(name: String) {
+        viewModelScope.launch {  fetchStatus.emit(name) }
+    }
 }

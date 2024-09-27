@@ -18,7 +18,7 @@ func main() {
     fmt.Println("Hello, From Svift-Go!")
 	var callback sviftytd.DownloadCallback = MyDownloadCallback{}
 
-	var songs = sviftytd.DownloadAudios("Az-mGR-CehY,QhBv0s-1VYQ,MgSpUurG8LM,YNfDpZPYLrc,lxqYJpAbmjE,vl9npDZkQtI,aaj7h0SzXoA,wxrgHG9Tvy4,mz1Bey6KjsQ,wya5utKP_Po,GFA9C2h1lJU,t7wSjy9Lv-o,MQs-6Oeobnw,BlZjTxPAmKc,rhrD7as3KJg",".",callback)
+	var songs = sviftytd.DownloadAudios("Az-mGR-CehY,QhBv0s-1VYQ,MgSpUurG8LM,YNfDpZPYLrc,lxqYJpAbmjE,vl9npDZkQtI,aaj7h0SzXoA,wxrgHG9Tvy4,mz1Bey6KjsQ,wya5utKP_Po,GFA9C2h1lJU,t7wSjy9Lv-o,MQs-6Oeobnw,BlZjTxPAmKc,rhrD7as3KJg","./downloads",callback)
 	fmt.Println("Songs:", songs)
 	data,err := json.Marshal(songs)
 	if err != nil {

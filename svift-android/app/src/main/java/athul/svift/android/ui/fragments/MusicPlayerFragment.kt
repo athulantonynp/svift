@@ -49,7 +49,7 @@ class MusicPlayerFragment : Fragment(), SeekBar.OnSeekBarChangeListener, Slider.
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupViews()
-        viewModel.sync(true)
+       // viewModel.sync(true)
         startPlayer()
     }
 
