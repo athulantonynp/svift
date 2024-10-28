@@ -11,4 +11,5 @@
     <color name="colorAccentNight">#03DAC5</color> <!-- A teal accent color that works well in dark mode -->
     <color name="materialBlack">#212121</color>
     <color name="materialPurple">#c2a3ce</color>
+    <color name="blue">#295F98</color>
 </resources>

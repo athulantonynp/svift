@@ -1,6 +1,8 @@
 package athul.svift.android
 
+import android.app.Activity
 import android.content.Context
+import android.graphics.Color
 import android.media.AudioFocusRequest
 import android.media.AudioManager
 import android.os.Build
@@ -9,6 +11,8 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import android.view.View
+import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -30,6 +34,13 @@ class MainActivity : AppCompatActivity() {
     private var hasAudioFocus = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        try{
+            window.setFlags(
+                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
         setContentView(R.layout.activity_main)
         setupAudioFocus()
         viewModel.cacheAlbumArtWorks()
