@@ -203,7 +203,7 @@ class MusicPlayerFragment : Fragment(), SeekBar.OnSeekBarChangeListener, Slider.
                             .error(R.drawable.black_background)
                             .placeholder(R.drawable.black_background)
                             .transition(DrawableTransitionOptions.withCrossFade(400))
-                            .apply(RequestOptions.bitmapTransform(BlurTransformation(30, 10)))
+                            .apply(RequestOptions.bitmapTransform(BlurTransformation(40, 10)))
                             .into(bgArt)
                     }
                     songName?.text = it.song.title
