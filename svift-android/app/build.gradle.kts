@@ -13,8 +13,8 @@ android {
         applicationId = "athul.svift.android"
         minSdk = 26
         targetSdk = 34
-        versionCode = 9
-        versionName = "1.9"
+        versionCode = 10
+        versionName = "1.10"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -82,4 +82,5 @@ dependencies {
     annotationProcessor("com.github.bumptech.glide:compiler:4.15.1")
     implementation("com.google.android.exoplayer:exoplayer:2.18.5")
     implementation("com.google.android.material:material:1.9.0")
+    implementation("jp.wasabeef:glide-transformations:4.3.0")
 }

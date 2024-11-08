@@ -29,12 +29,14 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.Player
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.shape.ShapeAppearanceModel
 import com.google.android.material.slider.Slider
+import jp.wasabeef.glide.transformations.BlurTransformation
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -116,6 +118,7 @@ class MusicPlayerFragment : Fragment(), SeekBar.OnSeekBarChangeListener, Slider.
         viewModel.startMusicObserver()
         val previous = view?.findViewById<FloatingActionButton>(R.id.iv_previous)
         val albumArt = view?.findViewById<ImageView>(R.id.iv_album)
+        val bgArt = view?.findViewById<ImageView>(R.id.iv_bg_art)
         val songName = view?.findViewById<TextView>(R.id.tv_song_name)
         val author = view?.findViewById<TextView>(R.id.tv_author)
         val play = view?.findViewById<FloatingActionButton>(R.id.iv_play)
@@ -192,6 +195,16 @@ class MusicPlayerFragment : Fragment(), SeekBar.OnSeekBarChangeListener, Slider.
                             .placeholder(R.drawable.sample_album_art)
                             .apply(RequestOptions().transform(CenterCrop(), RoundedCorners(24)))
                             .into(albumArt)
+                    }
+                    if (bgArt != null) {
+                        Glide.with(this@MusicPlayerFragment)
+                            .load(it.song.thumbnailURL)
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .error(R.drawable.black_background)
+                            .placeholder(R.drawable.black_background)
+                            .transition(DrawableTransitionOptions.withCrossFade(400))
+                            .apply(RequestOptions.bitmapTransform(BlurTransformation(30, 10)))
+                            .into(bgArt)
                     }
                     songName?.text = it.song.title
                     author?.text = it.song.author
