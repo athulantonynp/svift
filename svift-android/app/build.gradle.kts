@@ -42,7 +42,6 @@ dependencies {
     val activity_version = "1.9.0"
     val fragment_version = "1.8.1"
     val lifecycle_version = "2.8.3"
-    val room_version = "2.6.1"
 
     implementation("androidx.core:core-ktx:1.13.1")
     implementation("androidx.appcompat:appcompat:1.7.0")
@@ -61,11 +60,6 @@ dependencies {
     kapt("androidx.lifecycle:lifecycle-compiler:$lifecycle_version")
     implementation("androidx.datastore:datastore-preferences:1.1.1")
 
-    // Room
-    implementation("androidx.room:room-runtime:$room_version")
-    annotationProcessor("androidx.room:room-compiler:$room_version")
-    kapt("androidx.room:room-compiler:$room_version")
-    implementation("androidx.room:room-ktx:$room_version")
 
     //others
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
@@ -78,4 +72,6 @@ dependencies {
     implementation("com.google.android.exoplayer:exoplayer:2.18.5")
     implementation("com.google.android.material:material:1.9.0")
     implementation("jp.wasabeef:glide-transformations:4.3.0")
+    implementation ("com.anggrayudi:storage:2.0.0")
+
 }

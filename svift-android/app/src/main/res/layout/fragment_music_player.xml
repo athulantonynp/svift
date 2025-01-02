@@ -12,11 +12,27 @@
         android:scaleType="centerCrop"
         android:src="@drawable/black_background"
         android:contentDescription="bg_art" />
+
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/lpi"
+        android:visibility="gone"
+        android:indeterminate="true" />
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_gravity="center"
         android:layout_height="wrap_content"
         android:padding="16dp">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:src="@drawable/outline_account_circle_24"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:id="@+id/iv_menu"
+            android:layout_marginEnd="24dp"
+            android:layout_height="24dp" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
@@ -69,15 +85,6 @@
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <!--    <androidx.appcompat.widget.AppCompatSeekBar-->
-        <!--        android:layout_width="wrap_content"-->
-        <!--        android:layout_height="wrap_content"-->
-        <!--        app:layout_constraintTop_toBottomOf="@+id/cl_song_info"-->
-        <!--        android:layout_marginTop="32dp"-->
-        <!--        android:minWidth="340dp"-->
-        <!--        android:id="@+id/sk_progress"-->
-        <!--        app:layout_constraintStart_toStartOf="parent"-->
-        <!--        app:layout_constraintEnd_toEndOf="parent"/>-->
 
         <com.google.android.material.slider.Slider
             android:layout_width="0dp"
