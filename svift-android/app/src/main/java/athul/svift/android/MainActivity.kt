@@ -1,28 +1,16 @@
 package athul.svift.android
 
-import android.app.Activity
 import android.content.Context
-import android.graphics.Color
 import android.media.AudioFocusRequest
 import android.media.AudioManager
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.util.Log
-import android.view.View
 import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
-import athul.svift.android.ui.fragments.LoginFragment
 import athul.svift.android.ui.fragments.MusicPlayerFragment
 import athul.svift.android.viewmodels.MainViewModel
 import com.google.android.exoplayer2.ExoPlayer
-import com.google.android.exoplayer2.audio.AudioAttributes
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
@@ -44,6 +32,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setupAudioFocus()
         viewModel.cacheAlbumArtWorks()
+        loadFragment(MusicPlayerFragment())
     }
 
     private fun setupAudioFocus() {
@@ -92,19 +81,6 @@ class MainActivity : AppCompatActivity() {
                     exoPlayer.play()
                 }
                 exoPlayer.volume = 1.0f
-            }
-        }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        lifecycleScope.launch {
-            viewModel.authFlow.collectLatest {
-                if(it !=null){
-                    loadFragment(MusicPlayerFragment())
-                }else{
-                    loadFragment(LoginFragment())
-                }
             }
         }
     }

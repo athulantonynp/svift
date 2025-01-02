@@ -10,7 +10,7 @@
         android:layout_height="match_parent"
         android:id="@+id/iv_bg_art"
         android:scaleType="centerCrop"
-        android:src="@drawable/sample_album_art"
+        android:src="@drawable/black_background"
         android:contentDescription="bg_art" />
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -18,39 +18,9 @@
         android:layout_height="wrap_content"
         android:padding="16dp">
 
-        <ImageButton
-            android:id="@+id/iv_update"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginStart="16dp"
-            android:padding="8dp"
-            android:src="@drawable/baseline_ad_units_24"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-        <ImageButton
-            android:id="@+id/iv_sync"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:padding="8dp"
-            android:src="@drawable/baseline_sync_24"
-            app:layout_constraintEnd_toStartOf="@+id/iv_update"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toStartOf="@+id/iv_sync"
-            app:layout_constraintTop_toTopOf="parent"
-            android:id="@+id/tv_fetch_status"
-            android:textColor="@color/white"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_sync"
-            android:layout_marginEnd="8dp"/>
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/iv_sync"
+            app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="16dp"
             android:id="@+id/cl_song_info"
             app:layout_constraintStart_toStartOf="parent"

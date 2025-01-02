@@ -1,19 +1,15 @@
 package athul.svift.android.viewmodels
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
-import athul.svift.android.data.models.FetchCallback
-import athul.svift.android.data.models.FetchType
 import athul.svift.android.data.models.PlaybackState
 import athul.svift.android.data.models.PlaybackStatus
 import athul.svift.android.data.models.Song
-import athul.svift.android.injection.AuthRepository
 import athul.svift.android.injection.Injection
 import athul.svift.android.injection.showToast
 import com.bumptech.glide.Glide
@@ -23,37 +19,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import sviftytd.DownloadCallback
 
-class MainViewModel(val app:Application) : AndroidViewModel(app),FetchCallback {
-
-    val authFlow = Injection.authRepository.getCurrentUserFlow()
-    val fetchStatus = MutableStateFlow<String?>(null)
+class MainViewModel(val app:Application) : AndroidViewModel(app) {
 
     val songsListFlow = MutableStateFlow<List<Song>>(emptyList())
     val currentSongFlow = MutableStateFlow<PlaybackState?>(PlaybackState())
-    fun performLogin(userName:String,password:String){
-        viewModelScope.launch {
-            val response = AuthRepository().login(userName,password)
-            if(response == null){
-                app.showToast("Invalid authentication credentials. Please try again.")
-            }
-        }
-    }
-
-    fun sync(lazy:Boolean=false){
-        if(fetchStatus.value==null){
-            viewModelScope.launch(Dispatchers.IO) {
-                Injection.songsRepository.fetchLatestSongs(this@MainViewModel)
-            }
-        }else{
-            if(!lazy){
-                app.applicationContext.showToast("Fetching is already in progress. You may wait.")
-            }
-
-        }
-
-    }
 
     fun startMusicObserver(){
         viewModelScope.launch {
@@ -142,27 +112,5 @@ class MainViewModel(val app:Application) : AndroidViewModel(app),FetchCallback {
                 ) as T
             }
         }
-    }
-
-    override var downloadCallback: DownloadCallback
-        get() = DownloadCallback {
-            viewModelScope.launch { fetchStatus.emit(it) }
-        }
-        set(value) {}
-
-    override fun onFetchTypeDecided(fetchType: FetchType) {
-
-    }
-
-    override fun onFetchStarted() {
-       viewModelScope.launch {  fetchStatus.emit("Fetch is in progress") }
-    }
-
-    override fun onFetchEnd() {
-        viewModelScope.launch { fetchStatus.emit(null) }
-    }
-
-    override fun onFetchProgress(name: String) {
-        viewModelScope.launch {  fetchStatus.emit(name) }
     }
 }
