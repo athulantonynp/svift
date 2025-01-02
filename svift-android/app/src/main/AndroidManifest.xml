@@ -16,9 +16,6 @@
         android:theme="@style/Theme.Sviftandroid"
         tools:targetApi="31">
         <activity
-            android:name=".activities.AppUpdate"
-            android:exported="false" />
-        <activity
             android:name=".MainActivity"
             android:exported="true"
             android:screenOrientation="landscape">

@@ -1,6 +1,5 @@
 package athul.svift.android.ui.fragments
 
-import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
@@ -8,20 +7,16 @@ import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.SeekBar
 import android.widget.TextView
-import androidx.appcompat.widget.AppCompatSeekBar
 import androidx.core.content.ContextCompat
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import athul.svift.android.MainActivity
 import athul.svift.android.R
 import athul.svift.android.SviftApp
-import athul.svift.android.activities.AppUpdate
 import athul.svift.android.data.models.PlaybackStatus
 import athul.svift.android.data.models.Song
 import athul.svift.android.viewmodels.MainViewModel
@@ -34,7 +29,6 @@ import com.bumptech.glide.request.RequestOptions
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.Player
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.shape.ShapeAppearanceModel
 import com.google.android.material.slider.Slider
 import jp.wasabeef.glide.transformations.BlurTransformation
 import kotlinx.coroutines.flow.collectLatest
@@ -53,8 +47,6 @@ class MusicPlayerFragment : Fragment(), SeekBar.OnSeekBarChangeListener, Slider.
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupViews()
-       // viewModel.sync(true)
         startPlayer()
     }
 
@@ -62,28 +54,6 @@ class MusicPlayerFragment : Fragment(), SeekBar.OnSeekBarChangeListener, Slider.
 
     private fun isFromBackground(): Boolean {
         return (this@MusicPlayerFragment.activity?.application as SviftApp).isInBackground
-    }
-
-    private fun setupViews(){
-        view?.findViewById<ImageButton>(R.id.iv_sync)?.setOnClickListener {
-            viewModel.sync()
-        }
-        val statusView = view?.findViewById<TextView>(R.id.tv_fetch_status)
-
-        view?.findViewById<ImageButton>(R.id.iv_update)?.setOnClickListener {
-            launchUpdater()
-        }
-        lifecycleScope.launch {
-            viewModel.fetchStatus.collectLatest {
-                statusView?.isVisible = !it.isNullOrEmpty()
-                statusView?.text = it
-            }
-        }
-    }
-
-    private fun launchUpdater(){
-        val intent = Intent(activity,AppUpdate::class.java)
-        activity?.startActivity(intent)
     }
 
     private fun playSong(song: Song){
