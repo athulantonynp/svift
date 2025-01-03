@@ -6,22 +6,27 @@ import android.widget.Toast
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
-import athul.svift.android.data.database.AppDatabase
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 object Injection {
 
-    lateinit var database: AppDatabase
 
-    fun init(app:Application){
-        database = AppDatabase.getDatabase(app)
+    fun init(app: Application){
     }
 
 }
 
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "app_data")
+
+fun Context.observeKeyValueChange(key: Preferences.Key<String>): Flow<String?> {
+    return dataStore.data.map {
+        it[key]
+    }
+}
 
 
 inline fun <reified T> getAdapter(): JsonAdapter<T> {

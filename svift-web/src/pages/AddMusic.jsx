@@ -2,8 +2,8 @@ import Card from "@mui/material/Card";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import CardContent from "@mui/material/CardContent";
-import { useState } from "react";
-import { updateDoc, arrayUnion, doc } from "firebase/firestore";
+import { useEffect, useState } from "react";
+import { updateDoc, arrayUnion, doc, getDoc } from "firebase/firestore";
 import storage from "../storage";
 import firebase from "../firebase_admin";
 
@@ -11,6 +11,31 @@ const AddMusic = () => {
   const [musicId, setMusicId] = useState("");
   const [message, setMessage] = useState("");
   const [url, setUrl] = useState("");
+
+  // useEffect(() => {
+  //   const query = async () => {
+  //     try {
+  //       const userName = storage.getLoginCredentials().username;
+  //       console.log(userName);
+  //       //get all documents from the collection
+  //       const docRef = doc(firebase.db, "songs", userName);
+  //       const querySnapshot = getDoc(docRef);
+  //       if ((await querySnapshot).exists()) {
+  //         var out = [];
+  //         const data = (await querySnapshot).get("ym");
+  //         data.forEach((doc) => {
+  //           out.push(doc.videoId);
+  //         });
+  //         console.log(JSON.stringify(out));
+  //       } else {
+  //         console.log("No such document!");
+  //       }
+  //     } catch (e) {
+  //       console.error(e);
+  //     }
+  //   };
+  //   query();
+  // }, []);
 
   async function onSaveClicked() {
     const userName = storage.getLoginCredentials().username;
